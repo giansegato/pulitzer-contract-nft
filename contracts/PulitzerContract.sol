@@ -99,7 +99,7 @@ contract PulitzerContract is ChainlinkClient, ERC721URIStorage {
     }
 
     function getDomainHash(string memory domain)
-        internal
+        public
         pure
         returns (bytes32)
     {
@@ -148,7 +148,23 @@ contract PulitzerContract is ChainlinkClient, ERC721URIStorage {
     }
 
     function requestProofBody(address requester) public pure returns (string memory) {
-        return DomainManager.generateProof(requester);
+        // Converts the requester address to a string
+        // important: it doesn't take into account checksum capitalization!
+        // it's going to be in full lower case
+        bytes32 value = bytes32(uint256(uint160(requester)));
+        bytes memory alphabet = "0123456789abcdef";
+
+        bytes memory str = new bytes(42);
+        str[0] = "0";
+        str[1] = "x";
+        for (uint i = 0; i < 20; ) {
+            str[2+i*2] = alphabet[uint(uint8(value[i + 12] >> 4))];
+            str[3+i*2] = alphabet[uint(uint8(value[i + 12] & 0x0f))];
+            unchecked { 
+                ++i;
+            }
+        }
+        return string(str);
     }
 
     function _validateDomain(string memory domain) public view returns (bool) {

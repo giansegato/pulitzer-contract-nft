@@ -13,6 +13,7 @@ developmentChains.includes(network.name)
       const domain = "0xgs.dev"
 
       beforeEach(async () => {
+        const chainId = network.config.chainId
         pulitzerContract = await ethers.getContract("PulitzerContract")
         linkTokenAddress = networkConfig[network.config.chainId].linkToken
         const accounts = await ethers.getSigners()
@@ -25,11 +26,6 @@ developmentChains.includes(network.name)
           })
         }
 
-        console.log(
-          `Expected proof, given the owner ${signer.address}: ${await pulitzerContract.requestProofBody(
-            signer.address
-          )}`
-        )
       })
 
       afterEach(async function () {
@@ -39,7 +35,6 @@ developmentChains.includes(network.name)
       it("Successfully verifies the domain", async function () {
         
         this.timeout(600000) // 10 minutes max
-        const domain = "0xgs.dev"
 
         await new Promise(async (resolve, reject) => {
           pulitzerContract.once("VerificationRequested", async (requester, domain, proofBody, event) => {
@@ -51,7 +46,7 @@ developmentChains.includes(network.name)
             try {
               const domainHash = await pulitzerContract.getDomainHash(domain)
               const domainVerified = await pulitzerContract._isDomainVerified(domainHash)
-              assert(domainVerified, "The domain is verified.")
+              assert(domainVerified, "The domain is verified! 🍻")
               resolve()
             } catch (e) {
               reject(e)
@@ -63,7 +58,7 @@ developmentChains.includes(network.name)
           )
           const transactionReceipt = await transaction.wait(1)
           const requestId = transactionReceipt.events[0].topics[1]
-          console.log(`Request domain verification, ID: ${requestId}`)
+          console.log(`Request ID: ${requestId}`)
           
         })
       })

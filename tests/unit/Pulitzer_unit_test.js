@@ -187,4 +187,5 @@ const { developmentChains, networkConfig} = require("../../helper-hardhat-config
           await pulitzerContract.mint(url)
         })
       })
+      
     })

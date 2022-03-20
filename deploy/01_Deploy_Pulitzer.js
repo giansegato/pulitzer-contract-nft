@@ -4,6 +4,7 @@ const {
   developmentChains,
   VERIFICATION_BLOCK_CONFIRMATIONS,
 } = require("../helper-hardhat-config");
+
 const { autoFundCheck, verify } = require("../helper-functions");
 
 module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {

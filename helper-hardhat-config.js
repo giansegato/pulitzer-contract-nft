@@ -13,9 +13,10 @@ const networkConfig = {
     ethUsdPriceFeed: "0x9326BFA02ADD2366b30bacB125260Af641031331",
     keyHash: "0x6c3699283bda56ad74f6b855546325b68d482e983852a7a82979cc4807b641f4",
     vrfCoordinator: "0xdD3782915140c8f3b190B5D67eAc6dc5760C46E9",
-    oracle: "0xff07c97631ff3bab5e5e5660cdf47aded8d4d4fd",
+    oracle: "0xfF07C97631Ff3bAb5e5e5660Cdf47AdEd8D4d4Fd",
     jobId: "791bd73c8a1349859f09b1cb87304f71",
     fee: "100000000000000000",
+    fundAmount: " ",
   },
   4: {
     name: "rinkeby",
@@ -26,6 +27,7 @@ const networkConfig = {
     oracle: "0xc57b33452b4f7bb189bb5afae9cc4aba1f7a4fd8",
     jobId: "6b88e0402e5d415eb946e528b8e0c7ba",
     fee: "100000000000000000",
+    fundAmount: "100000000000000000",
   },
   1: {
     name: "mainnet",
