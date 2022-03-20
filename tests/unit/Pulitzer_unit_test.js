@@ -1,12 +1,12 @@
 const { assert, expect } = require("chai")
-const { network, deployments, ethers, hre } = require("hardhat")
+const { network, deployments, ethers } = require("hardhat")
 const { developmentChains, networkConfig} = require("../../helper-hardhat-config")
 
 
 !developmentChains.includes(network.name)
   ? describe.skip
   : describe("Pulitzer Unit Tests", async function () {
-      let pulitzerContract
+      let pulitzerContract, mockOracle
       let deployer
 
       beforeEach(async () => {
@@ -17,6 +17,7 @@ const { developmentChains, networkConfig} = require("../../helper-hardhat-config
         const linkToken = await ethers.getContract("LinkToken")
         const linkTokenAddress = linkToken.address
         const fee = networkConfig[chainId]["fee"]
+        mockOracle = await ethers.getContract("MockOracle")
         await hre.run("fund-link", {
           contract: pulitzerContract.address,
           linkaddress: linkTokenAddress,
