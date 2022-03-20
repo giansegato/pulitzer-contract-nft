@@ -1,5 +1,5 @@
 const { assert, expect } = require("chai")
-const { network, deployments, ethers } = require("hardhat")
+const { network, deployments, ethers, hre } = require("hardhat")
 const { developmentChains, networkConfig} = require("../../helper-hardhat-config")
 
 
@@ -13,16 +13,14 @@ const { developmentChains, networkConfig} = require("../../helper-hardhat-config
         const chainId = network.config.chainId
         deployer = (await ethers.getSigners())[0]
         await deployments.fixture(["mocks", "pulitzer"])
-        linkToken = await ethers.getContract("LinkToken")
-        linkTokenAddress = linkToken.address
-        additionalMessage = ` --linkaddress  ${linkTokenAddress}`
         pulitzerContract = await ethers.getContract("PulitzerContract")
-        mockOracle = await ethers.getContract("MockOracle")
-
+        const linkToken = await ethers.getContract("LinkToken")
+        const linkTokenAddress = linkToken.address
+        const fee = networkConfig[chainId]["fee"]
         await hre.run("fund-link", {
           contract: pulitzerContract.address,
           linkaddress: linkTokenAddress,
-          fundamount: networkConfig[chainId]["fee"],
+          fundamount: fee,
         })
       })
 

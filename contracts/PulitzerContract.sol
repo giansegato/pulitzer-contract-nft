@@ -116,6 +116,17 @@ contract PulitzerContract is ChainlinkClient, ERC721URIStorage {
             );
     }
 
+    function isDomainVerified(string memory domain, address requester) public view returns (bool) {
+        return _isDomainVerified(getDomainHash(domain), requester);
+    }
+
+    /*
+     * @dev Forgets address from verified domains
+     */
+    function forgetMe() public {
+        delete verifiedDomains[msg.sender];
+    }
+
     /*
      * @dev Checks if the domain is verified by the address,
      *      looping through the verifiedDomains mapping.
